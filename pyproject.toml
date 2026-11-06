@@ -41,6 +41,7 @@ dev = [
 [tool.mypy]
 ignore_missing_imports = true
 check_untyped_defs = true
+exclude = ["^build/"]
 
 [tool.ruff]
 line-length = 120
