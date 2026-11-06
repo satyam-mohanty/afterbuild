@@ -1,0 +1,59 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# afterbuild cache
+.afterbuild/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Development
+.env
+# Virtual environment
+venv/
+# Packaging
+.pyc
+# Logs
+logs/
+
+# IDE
+.idea/
+# VS Code
+.vscode/
+
+# Python
+__pycache__/
+# Pytest
+pytest_cache/
+# Coverage
+htmlcov/
+# Sphinx
+build/
+# Ruff
+.ruff_cache/
+
+# Temporary files
+*.tmp
+# Logs
+*.log
+
+# Local settings
+.env.local
+# Secrets
+.env
+# Configuration
+config.yaml
+
+# Test fixtures
+tests/.gitkeep
+
+# Linting
+.ruff_cache/
+# Mypy
+mypy_cache/
+
+# Weasyprint cache
+weasyprint_cache/
