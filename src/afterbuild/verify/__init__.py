@@ -40,7 +40,9 @@ def _check_link(url: str) -> tuple[bool, str]:
 
 
 def _file_exists(repo_root: Path, path_str: str) -> bool:
-    return (repo_root / path_str).exists()
+    # Normalize path separators for cross-platform compatibility
+    normalized_path = Path(*path_str.replace("\\", "/").split("/"))
+    return (repo_root / normalized_path).exists()
 
 
 def _function_in_file(file_path: Path, func_name: str) -> bool:
@@ -74,8 +76,8 @@ def run_verify(draft_path: Path, repo_root: Path) -> int:
 
     # 2. Code references – we treat any back‑ticked token that looks like a path or function
     for token in _CODE_REF_RE.findall(text):
-        # Path detection – contains a slash or ends with a known extension
-        if "/" in token or any(token.endswith(ext) for ext in [".py", ".js", ".ts", ".java", ".go"]):
+        # Path detection – contains a slash or backslash, or ends with a known extension
+        if "/" in token or "\\" in token or any(token.endswith(ext) for ext in [".py", ".js", ".ts", ".java", ".go"]):
             if not _file_exists(repo_root, token):
                 issues.append(f"Referenced file not found: `{token}`")
         else:
