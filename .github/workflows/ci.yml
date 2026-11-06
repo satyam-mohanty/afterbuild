@@ -23,7 +23,7 @@ jobs:
       - run: pip install --upgrade pip
       - run: pip install .[dev]
       - run: ruff check .
-      - run: mypy .
+      - run: mypy src tests
       - run: pytest
 
   release:
