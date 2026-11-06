@@ -1,4 +1,4 @@
-# afterbuild
+# AfterBuild Skill for Documentation
 
 [![CI](https://github.com/satyam-mohanty/afterbuild/actions/workflows/ci.yml/badge.svg)](https://github.com/satyam-mohanty/afterbuild/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -13,46 +13,17 @@
 
 ## Features
 
-- 🧠 **Agent & Skill Native**: Integrates seamlessly with Claude Code, Cursor Rules, or custom agent setups.
-- 🔍 **Automated Codebase Analysis**: Deep-scans language stats, entrypoints, Git history, modules, and config flags.
-- 🎭 **Targeted Output Modes**: Switch between developer docs, end-user manuals, technical post-mortems, and engineering storytelling.
-- ✅ **Built-in Fact Verification (`afterbuild verify`)**: Validates hyperlinks, CLI flags, and ensures referenced files and symbols actually exist in the codebase.
-- 📦 **Multi-Format Export**: Export drafts cleanly to Markdown, HTML, PDF, or DOCX.
+- **Agent & Skill Native**: Integrates seamlessly with Claude Code, Cursor Rules, or custom agent setups.
+- **Automated Codebase Analysis**: Deep-scans language stats, entrypoints, Git history, modules, and config flags.
+- **Targeted Output Modes**: Switch between developer docs, end-user manuals, technical post-mortems, and engineering storytelling.
+- **Built-in Fact Verification (`afterbuild verify`)**: Validates hyperlinks, CLI flags, and ensures referenced files and symbols actually exist in the codebase.
+- **Multi-Format Export**: Export drafts cleanly to Markdown, HTML, PDF, or DOCX.
 
 ---
 
 ## Installation & Agent Setup
 
-### ⚡ Zero-Install Prompt (Use directly with your LLM / Agent)
-
-You don't even need to install the CLI command. Just copy and paste this prompt directly into your AI chat (Claude Code, Cursor, Windsurf, Copilot, or ChatGPT):
-
-```text
-Please read the afterbuild skill directly from GitHub and install it into this workspace:
-- Fetch and copy the skill files from https://github.com/satyam-mohanty/afterbuild/tree/main/src/afterbuild/skill
-- For Claude Code: place under .claude/skills/afterbuild/
-- For Cursor: place under .cursor/rules/afterbuild.mdc
-- For other agents: append the SKILL.md content into AGENTS.md
-
-Once added, guide me through creating documentation for this repository.
-```
-
----
-
-### 🤖 LLM Prompt (With CLI & Verification Support)
-
-If you want the full power of `afterbuild verify` (checks for hallucinated code references, broken links, and missing flags) and document export:
-
-```text
-Please install the afterbuild tool and initialize it for this project:
-1. Run: pip install git+https://github.com/satyam-mohanty/afterbuild
-2. Initialize the skill for our editor: afterbuild init --target claude (or cursor/agents)
-3. Run: afterbuild analyze
-```
-
----
-
-### 💻 Manual CLI Installation
+### Manual CLI Installation
 
 If you prefer installing the CLI yourself:
 
@@ -71,8 +42,23 @@ pipx install git+https://github.com/satyam-mohanty/afterbuild
 uvx --from git+https://github.com/satyam-mohanty/afterbuild install afterbuild
 ```
 
----
+--- 
 
+### Zero-Install Prompt (Use directly with your LLM / Agent)
+
+You don't even need to install the CLI command. Just copy and paste this prompt directly into your AI chat (Claude Code, Cursor, Windsurf, Copilot, or ChatGPT):
+
+```text
+Please read the afterbuild skill directly from GitHub and install it into this workspace:
+- Fetch and copy the skill files from https://github.com/satyam-mohanty/afterbuild/tree/main/src/afterbuild/skill
+- For Claude Code: place under .claude/skills/afterbuild/
+- For Cursor: place under .cursor/rules/afterbuild.mdc
+- For other agents: append the SKILL.md content into AGENTS.md
+
+Once added, guide me through creating documentation for this repository.
+```
+
+---
 ## Quickstart
 
 ### 1. Initialize for your AI workflow
