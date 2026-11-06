@@ -28,14 +28,13 @@ def _resource_path(subdir: str) -> Path:
     """Return the path to the packaged skill resources.
 
     ``subdir`` is relative to the ``afterbuild/skill`` package directory.
-    During development we locate the files on disk; when installed as a
-    wheel ``importlib.resources`` would be used.
     """
-    # The source lives in the repository under ``src/afterbuild/skill``
-    base = Path(__file__).parent.parent / "skill"
-    return base / subdir
+    base = Path(__file__).parent / "skill"
+    return base / subdir if subdir else base
 
 def _copy_skill(src_dir: Path, dest_dir: Path, force: bool) -> None:
+    if dest_dir.exists() and any(dest_dir.iterdir()) and not force:
+        raise click.ClickException(f"{dest_dir} already exists and is not empty – use --force to overwrite")
     dest_dir.mkdir(parents=True, exist_ok=True)
     for item in src_dir.iterdir():
         dest_path = dest_dir / item.name

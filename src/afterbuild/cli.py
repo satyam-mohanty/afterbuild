@@ -17,7 +17,8 @@ from pathlib import Path
 
 import click
 
-from . import analyze, verify, export, modes, init_cmd
+from . import analyze, export, init_cmd, modes, verify
+
 
 @click.group()
 def main() -> None:

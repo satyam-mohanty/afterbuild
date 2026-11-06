@@ -35,5 +35,20 @@ dev = [
     "mypy>=1.0",
 ]
 
+[tool.setuptools.package-data]
+"afterbuild" = ["skill/**/*.md", "skill/*.md"]
+
+[tool.mypy]
+ignore_missing_imports = true
+check_untyped_defs = true
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+ignore = ["E501"]
+
 [project.scripts]
 afterbuild = "afterbuild.cli:main"

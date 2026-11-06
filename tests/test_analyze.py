@@ -1,10 +1,10 @@
-import os
+import json
 from pathlib import Path
 
-import pytest
 from click.testing import CliRunner
 
 from afterbuild.cli import main
+
 
 def test_analyze_basic(tmp_path: Path) -> None:
     runner = CliRunner()
@@ -18,8 +18,8 @@ def test_analyze_empty_dir(tmp_path: Path) -> None:
     runner = CliRunner()
     result = runner.invoke(main, ["analyze", str(tmp_path)])
     assert result.exit_code == 0
-    brief_json = (tmp_path / ".afterbuild/brief.json").read_text()
-    assert "Unknown" in brief_json
+    brief_md = (tmp_path / ".afterbuild/brief.md").read_text()
+    assert "Unknown" in brief_md
 
 def test_analyze_with_files(tmp_path: Path) -> None:
     # Add some files
@@ -39,8 +39,8 @@ def test_analyze_no_git(tmp_path: Path) -> None:
     runner = CliRunner()
     result = runner.invoke(main, ["analyze", str(tmp_path)])
     assert result.exit_code == 0
-    brief_json = (tmp_path / ".afterbuild/brief.json").read_text()
-    assert "git" not in brief_json or not brief_json["git"]
+    data = json.loads((tmp_path / ".afterbuild/brief.json").read_text())
+    assert "git" not in data or not data["git"]
 
 def test_analyze_with_git(tmp_path: Path) -> None:
     from git import Repo
@@ -53,6 +53,6 @@ def test_analyze_with_git(tmp_path: Path) -> None:
     runner = CliRunner()
     result = runner.invoke(main, ["analyze", str(tmp_path)])
     assert result.exit_code == 0
-    brief_json = (tmp_path / ".afterbuild/brief.json").read_text()
-    assert "git" in brief_json
-    assert "latest_commit" in brief_json["git"]
+    data = json.loads((tmp_path / ".afterbuild/brief.json").read_text())
+    assert "git" in data
+    assert "latest_commit" in data["git"]

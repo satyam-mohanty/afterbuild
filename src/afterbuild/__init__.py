@@ -1,10 +1,10 @@
 """afterbuild package initialization."""
 
 __all__ = [
-    "cli",
-    "init_cmd",
     "analyze",
-    "verify",
+    "cli",
     "export",
+    "init_cmd",
     "modes",
+    "verify",
 ]

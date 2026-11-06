@@ -12,7 +12,6 @@ from __future__ import annotations
 import shutil
 import subprocess
 from pathlib import Path
-from typing import Optional
 
 import click
 
@@ -41,7 +40,7 @@ def _fallback_docx(input_md: Path, out_path: Path) -> bool:
         # Very naive: each line becomes a paragraph
         for line in input_md.read_text(encoding="utf-8").splitlines():
             doc.add_paragraph(line)
-        doc.save(out_path)
+        doc.save(str(out_path))
         return True
     except Exception:
         return False
@@ -82,8 +81,9 @@ def run_export(draft: Path, fmt: str, out_dir: Path) -> Path:
     out_path = out_dir / f"{draft.stem}.{fmt}"
 
     if fmt == "md":
-        # Simple copy
-        shutil.copyfile(draft, out_path)
+        # Simple copy if source and destination are different
+        if draft.resolve() != out_path.resolve():
+            shutil.copyfile(draft, out_path)
         return out_path
 
     # Try pandoc first

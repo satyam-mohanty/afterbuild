@@ -18,9 +18,7 @@ production‑grade verifier would need more sophisticated parsing.
 from __future__ import annotations
 
 import re
-import sys
 from pathlib import Path
-from typing import List, Tuple
 
 import click
 import requests
@@ -31,7 +29,7 @@ _CODE_REF_RE = re.compile(r"`([^`]+)`")  # back‑ticked snippets
 _FLAG_RE = re.compile(r"--[A-Za-z0-9_-]+")
 
 
-def _check_link(url: str) -> Tuple[bool, str]:
+def _check_link(url: str) -> tuple[bool, str]:
     try:
         resp = requests.head(url, allow_redirects=True, timeout=5)
         if resp.status_code == 200:
@@ -66,7 +64,7 @@ def run_verify(draft_path: Path, repo_root: Path) -> int:
         raise click.ClickException(f"Draft file {draft_path} not found")
 
     text = draft_path.read_text(encoding="utf-8")
-    issues: List[str] = []
+    issues: list[str] = []
 
     # 1. Links
     for label, url in _LINK_RE.findall(text):
@@ -81,11 +79,15 @@ def run_verify(draft_path: Path, repo_root: Path) -> int:
             if not _file_exists(repo_root, token):
                 issues.append(f"Referenced file not found: `{token}`")
         else:
+            # Check if this looks like a function name or function call (e.g. `foo()` or `foo_bar`)
+            func_name = token.removesuffix("()")
+            if not re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", func_name):
+                continue
             # Assume function name – search in all source files
             found = False
             for p in repo_root.rglob("*.*"):
                 if p.suffix.lower() in {".py", ".js", ".ts", ".java", ".go", ".cpp", ".c", ".rs"}:
-                    if _function_in_file(p, token):
+                    if _function_in_file(p, func_name):
                         found = True
                         break
             if not found:

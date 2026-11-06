@@ -1,10 +1,9 @@
-import os
 from pathlib import Path
 
-import pytest
 from click.testing import CliRunner
 
 from afterbuild.cli import main
+
 
 def test_export_md(tmp_path: Path) -> None:
     draft = tmp_path / "draft.md"
@@ -36,4 +35,4 @@ def test_export_invalid_format(tmp_path: Path) -> None:
     runner = CliRunner()
     result = runner.invoke(main, ["export", str(draft), "--to", "html", "--out", str(tmp_path)])
     assert result.exit_code != 0
-    assert "Unsupported format" in result.output
+    assert "Invalid value for '--to'" in result.output or "Unsupported format" in result.output

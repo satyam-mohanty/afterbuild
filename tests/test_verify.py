@@ -1,10 +1,9 @@
-import os
 from pathlib import Path
 
-import pytest
 from click.testing import CliRunner
 
 from afterbuild.cli import main
+
 
 def test_verify_valid_links(tmp_path: Path) -> None:
     draft = tmp_path / "draft.md"

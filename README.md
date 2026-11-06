@@ -3,6 +3,7 @@
 [![CI](https://github.com/satyam-mohanty/afterbuild/actions/workflows/ci.yml/badge.svg)](https://github.com/satyam-mohanty/afterbuild/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support-yellow.svg?logo=buy-me-a-coffee)](https://buymeacoffee.com/satyammohanty)
 
 > **Turn finished codebases into polished docs, reports, and case studies.**
 
@@ -163,6 +164,12 @@ ruff check .
 ## Contributing
 
 Contributions, issues, and feature suggestions are welcome! Check out [CONTRIBUTING.md](CONTRIBUTING.md) and our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
+## Support
+
+If you find `afterbuild` useful, consider supporting its development:
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-yellow.svg?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/satyammohanty)
 
 ## License
 

@@ -10,12 +10,18 @@ from __future__ import annotations
 import importlib.resources as pkg_resources
 from pathlib import Path
 
+
 def list_modes() -> list[str]:
     """Return a list of mode names shipped with the package."""
     try:
         # ``afterbuild.skill.modes`` is a package containing the markdown files
-        with pkg_resources.files("afterbuild.skill.modes").as_file() as modes_path:
-            return [p.stem for p in Path(modes_path).glob("*.md")]
+        modes_ref = pkg_resources.files("afterbuild.skill.modes")
+        with pkg_resources.as_file(modes_ref) as modes_path:
+            return sorted(
+                p.stem
+                for p in Path(modes_path).glob("*.md")
+                if not p.name.startswith("_")
+            )
     except Exception:
         # If resources are not available (e.g., during development) fall back to a static list
-        return ["product-docs", "technical-docs", "research-report", "storytelling", "case-study"]
+        return ["case-study", "product-docs", "research-report", "storytelling", "technical-docs"]

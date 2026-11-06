@@ -8,11 +8,10 @@ presence) and writes ``.afterbuild/brief.json`` and ``brief.md``.
 from __future__ import annotations
 
 import json
-import os
 from pathlib import Path
-from typing import Dict, List
 
 import click
+import git
 
 # Simple language detection based on file extensions
 EXT_LANG_MAP = {
@@ -29,7 +28,7 @@ EXT_LANG_MAP = {
     ".md": "Markdown",
 }
 
-def _detect_languages(root: Path) -> List[str]:
+def _detect_languages(root: Path) -> list[str]:
     langs = set()
     for path in root.rglob("*"):
         if path.is_file():
@@ -38,24 +37,27 @@ def _detect_languages(root: Path) -> List[str]:
                 langs.add(EXT_LANG_MAP[ext])
     return sorted(langs)
 
-def _find_entry_points(root: Path) -> List[str]:
-    # Very naive: look for typical entry scripts (e.g., __main__.py, index.js)
+def _find_entry_points(root: Path) -> list[str]:
+    # Look for typical entry scripts (e.g., __main__.py, main.py, index.js)
     candidates = []
-    for path in root.rglob("__main__.py"):
-        candidates.append(str(path.relative_to(root)))
-    for path in root.rglob("index.js"):
-        candidates.append(str(path.relative_to(root)))
-    return candidates
+    for pattern in ("__main__.py", "main.py", "index.js"):
+        for path in root.rglob(pattern):
+            candidates.append(str(path.relative_to(root)))
+    return sorted(candidates)
 
 def _has_tests(root: Path) -> bool:
     return any(p for p in root.rglob("test_*.py") if p.is_file()) or any(p for p in root.rglob("*_test.py") if p.is_file())
 
-def _git_summary(root: Path) -> Dict[str, str]:
+def _git_summary(root: Path) -> dict[str, str]:
     try:
-        import git
         repo = git.Repo(root, search_parent_directories=True)
         latest = repo.head.commit
-        return {"latest_commit": latest.hexsha[:7], "author": latest.author.name, "date": latest.committed_datetime.isoformat()}
+        author_name = str(latest.author.name) if latest.author and latest.author.name else "Unknown"
+        return {
+            "latest_commit": latest.hexsha[:7],
+            "author": author_name,
+            "date": latest.committed_datetime.isoformat(),
+        }
     except Exception:
         return {}
 
@@ -99,7 +101,7 @@ def run_analyze(root: Path) -> str:
     if git_info:
         md_lines.append(f"**Latest commit**: {git_info.get('latest_commit')} by {git_info.get('author')} on {git_info.get('date')}" )
     if readme_snippet:
-        md_lines.append("\n## README excerpt\n")
+        md_lines.append("\n## README.md excerpt\n")
         md_lines.append(readme_snippet)
     (after_dir / "brief.md").write_text("\n".join(md_lines), encoding="utf-8")
 
