@@ -20,11 +20,27 @@
 
 ---
 
-## Installation
+## Installation & Agent Setup
 
-### 🤖 Ask your AI Agent / LLM
+### ⚡ Zero-Install Prompt (Use directly with your LLM / Agent)
 
-Copy and paste this prompt to Claude Code, Cursor, Codex, or ChatGPT:
+You don't even need to install the CLI command. Just copy and paste this prompt directly into your AI chat (Claude Code, Cursor, Windsurf, Copilot, or ChatGPT):
+
+```text
+Please read the afterbuild skill directly from GitHub and install it into this workspace:
+- Fetch and copy the skill files from https://github.com/satyam-mohanty/afterbuild/tree/main/src/afterbuild/skill
+- For Claude Code: place under .claude/skills/afterbuild/
+- For Cursor: place under .cursor/rules/afterbuild.mdc
+- For other agents: append the SKILL.md content into AGENTS.md
+
+Once added, guide me through creating documentation for this repository.
+```
+
+---
+
+### 🤖 LLM Prompt (With CLI & Verification Support)
+
+If you want the full power of `afterbuild verify` (checks for hallucinated code references, broken links, and missing flags) and document export:
 
 ```text
 Please install the afterbuild tool and initialize it for this project:
@@ -35,9 +51,9 @@ Please install the afterbuild tool and initialize it for this project:
 
 ---
 
-### 💻 Manual Installation
+### 💻 Manual CLI Installation
 
-Pick your preferred package manager:
+If you prefer installing the CLI yourself:
 
 **pip**
 ```bash
