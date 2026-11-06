@@ -42,7 +42,7 @@ def _find_entry_points(root: Path) -> list[str]:
     candidates = []
     for pattern in ("__main__.py", "main.py", "index.js"):
         for path in root.rglob(pattern):
-            candidates.append(str(path.relative_to(root)))
+            candidates.append(path.relative_to(root).as_posix())
     return sorted(candidates)
 
 def _has_tests(root: Path) -> bool:
