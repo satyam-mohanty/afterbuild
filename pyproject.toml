@@ -9,7 +9,7 @@ description = "Turn a finished codebase into a document (docs, reports, storytel
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
-authors = [{name = "Satyam Mohanty", email = ""}]
+authors = [{name = "Satyam Mohanty", email = "satyammohanty892@gmail.com"}]
 keywords = ["documentation", "cli", "pandoc", "automation"]
 classifiers = [
     "Programming Language :: Python :: 3",

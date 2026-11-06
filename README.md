@@ -1,86 +1,153 @@
 # afterbuild
 
-Turn a finished codebase into a polished document (docs, technical report, storytelling, case study).
+[![CI](https://github.com/satyam-mohanty/afterbuild/actions/workflows/ci.yml/badge.svg)](https://github.com/satyam-mohanty/afterbuild/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
+> **Turn finished codebases into polished docs, reports, and case studies.**
 
-## Install
+`afterbuild` inspects a finished codebase and guides you (or your AI agent) through generating publication-ready documentation, architecture overviews, developer guides, research reports, engineering case studies, or dev narratives.
 
+---
+
+## Features
+
+- 🧠 **Agent & Skill Native**: Integrates seamlessly with Claude Code, Cursor Rules, or custom agent setups.
+- 🔍 **Automated Codebase Analysis**: Deep-scans language stats, entrypoints, Git history, modules, and config flags.
+- 🎭 **Targeted Output Modes**: Switch between developer docs, end-user manuals, technical post-mortems, and engineering storytelling.
+- ✅ **Built-in Fact Verification (`afterbuild verify`)**: Validates hyperlinks, CLI flags, and ensures referenced files and symbols actually exist in the codebase.
+- 📦 **Multi-Format Export**: Export drafts cleanly to Markdown, HTML, PDF, or DOCX.
+
+---
+
+## Installation
+
+### 🤖 Ask your AI Agent / LLM
+
+Copy and paste this prompt to Claude Code, Cursor, Codex, or ChatGPT:
+
+```text
+Please install the afterbuild tool and initialize it for this project:
+1. Run: pip install git+https://github.com/satyam-mohanty/afterbuild
+2. Initialize the skill for our editor: afterbuild init --target claude (or cursor/agents)
+3. Run: afterbuild analyze
+```
+
+---
+
+### 💻 Manual Installation
+
+Pick your preferred package manager:
+
+**pip**
 ```bash
 pip install git+https://github.com/satyam-mohanty/afterbuild
-# or
+```
+
+**pipx** (recommended for isolated CLI usage)
+```bash
 pipx install git+https://github.com/satyam-mohanty/afterbuild
-# or
+```
+
+**uv / uvx**
+```bash
 uvx --from git+https://github.com/satyam-mohanty/afterbuild install afterbuild
 ```
 
-## Usage
+---
 
-### 1. Initialize the skill
+## Quickstart
+
+### 1. Initialize for your AI workflow
+
+Run this in your target project root to attach the `afterbuild` skill:
 
 ```bash
 cd your-project
+
+# For Claude Code (.claude/skills/afterbuild/)
 afterbuild init --target claude
+
+# For Cursor (.cursor/rules/afterbuild.mdc)
+afterbuild init --target cursor
+
+# For generic agent specs (appends to AGENTS.md)
+afterbuild init --target agents
 ```
 
-### 2. Analyze your project
+### 2. Analyze the project
+
+Extract codebase structure, key components, dependencies, and metadata:
 
 ```bash
 afterbuild analyze
 ```
 
-### 3. Follow the skill prompts
+### 3. Draft with your AI agent
 
-The skill will guide you through choosing a document type and crafting your document.
+Use the installed skill in your editor/terminal to create a draft tailored to your chosen mode.
 
-### 4. Export your document
+### 4. Verify references
+
+Ensure the generated documentation didn't hallucinate non-existent files, broken links, or missing CLI arguments:
 
 ```bash
-afterbuild export draft.md --to md --out docs/
+afterbuild verify draft.md
 ```
+
+### 5. Export
+
+Convert the draft into your desired format:
+
+```bash
+# Export to Markdown, HTML, PDF, or DOCX
+afterbuild export draft.md --to md --out docs/
+afterbuild export draft.md --to html --out dist/
+afterbuild export draft.md --to pdf --out dist/
+```
+
+---
 
 ## Supported Modes
 
-| Mode               | Description                          | Target Audience          |
-|--------------------|--------------------------------------|--------------------------|
-| product-docs      | User-friendly documentation  | End users              |
-| technical-docs    | Developer-focused documentation | Developers             |
-| research-report    | Structured research report       | Researchers             |
-| storytelling       | Narrative journey of building    | General audience        |
-| case-study         | Retrospective analysis           | Professionals           |
+| Mode | Description | Target Audience |
+| :--- | :--- | :--- |
+| `product-docs` | Clear, user-friendly guides and manuals | End users & customers |
+| `technical-docs` | Architecture deep-dives, APIs, and workflows | Developers & contributors |
+| `research-report` | Structured scientific / algorithmic write-ups | Researchers & engineers |
+| `storytelling` | The narrative behind building the project | Community & blog readers |
+| `case-study` | Retrospective, engineering trade-offs, and outcomes | Leaders & professionals |
 
-## How Verify Works
+---
 
-The ``afterbuild verify`` command checks:
+## Adding Custom Modes
 
-- All hyperlinks are reachable
-- Code references (file paths, function names) exist in the repo
-- CLI flags are documented in config files
+1. Add a new markdown template in `src/afterbuild/skill/modes/`.
+2. Follow the structure in `src/afterbuild/skill/modes/_template.md`.
+3. The filename automatically defines the new mode name.
 
-## Supported Targets
+---
 
-| Target   | Description                          |
-|----------|--------------------------------------|
-| claude   | Installs into `.claude/skills/afterbuild/` |
-| agents   | Adds a section to `AGENTS.md`       |
-| cursor   | Writes to `.cursor/rules/afterbuild.mdc` |
+## Development
 
-## How to Add a Mode
+```bash
+git clone https://github.com/satyam-mohanty/afterbuild.git
+cd afterbuild
+pip install -e ".[dev]"
 
-1. Add a new markdown file in `src/afterbuild/skill/modes/`
-2. Follow the template in `_template.md`
-3. The file name becomes the mode name
+# Run tests
+pytest
 
-## Roadmap
+# Lint and format
+ruff check .
+```
 
-- [ ] Add more exporter backends
-- [ ] Support more programming languages
-- [ ] Add interactive mode selection
-- [ ] Improve verification for complex code references
-
-## License
-
-MIT
+---
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+Contributions, issues, and feature suggestions are welcome! Check out [CONTRIBUTING.md](CONTRIBUTING.md) and our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
+## License
+
+Distributed under the [MIT License](LICENSE).
