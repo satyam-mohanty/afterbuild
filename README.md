@@ -50,8 +50,8 @@ You don't even need to install the CLI command. Just copy and paste this prompt 
 
 ```text
 Please read the afterbuild skill directly from GitHub and install it into this workspace:
-- Fetch and copy the skill files from https://github.com/satyam-mohanty/afterbuild/tree/main/src/afterbuild/skill
-- For Claude Code: place under .claude/skills/afterbuild/
+- Read https://raw.githubusercontent.com/satyam-mohanty/afterbuild/main/SKILL.md
+- For Claude Code: place under .claude/skills/afterbuild/SKILL.md
 - For Cursor: place under .cursor/rules/afterbuild.mdc
 - For other agents: append the SKILL.md content into AGENTS.md
 
